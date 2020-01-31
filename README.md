@@ -1,2 +1,2 @@
 # restful-web-services
-RESTful web services sandbox
+Spring REST web services sandbox
