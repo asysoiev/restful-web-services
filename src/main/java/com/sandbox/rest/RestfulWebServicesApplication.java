@@ -1,4 +1,4 @@
-package com.sandbox.rest.webservices;
+package com.sandbox.rest;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
