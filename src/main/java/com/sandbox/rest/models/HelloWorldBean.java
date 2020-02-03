@@ -7,10 +7,11 @@ import java.util.StringJoiner;
  */
 public class HelloWorldBean {
 
+    private static final String MSG_TEMPLATE = "Hello World, %s";
     private String message;
 
-    public HelloWorldBean(String message) {
-        this.message = message;
+    public HelloWorldBean(String name) {
+        this.message = String.format(MSG_TEMPLATE, name);
     }
 
     public String getMessage() {
