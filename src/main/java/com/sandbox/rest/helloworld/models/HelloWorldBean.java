@@ -1,4 +1,4 @@
-package com.sandbox.rest.models;
+package com.sandbox.rest.helloworld.models;
 
 import java.util.StringJoiner;
 

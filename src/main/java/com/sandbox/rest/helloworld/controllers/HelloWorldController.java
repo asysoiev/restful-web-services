@@ -1,6 +1,6 @@
-package com.sandbox.rest.controllers;
+package com.sandbox.rest.helloworld.controllers;
 
-import com.sandbox.rest.models.HelloWorldBean;
+import com.sandbox.rest.helloworld.models.HelloWorldBean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
