@@ -30,7 +30,11 @@ public class UserRestController {
 
     @GetMapping("/users/{id}")
     public User findUserById(@PathVariable int id) {
-        return userDao.findById(id);
+        User user = userDao.findById(id);
+        if (user == null) {
+            throw new UserNotFoundException(id);
+        }
+        return user;
     }
 
     @PostMapping("/users")
