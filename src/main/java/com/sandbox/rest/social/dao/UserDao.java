@@ -14,4 +14,6 @@ public interface UserDao {
     User save(User user);
 
     User findById(Integer id);
+
+    User delete(Integer id);
 }

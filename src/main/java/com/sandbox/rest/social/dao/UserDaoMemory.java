@@ -5,8 +5,9 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
+import java.util.Map;
 
 /**
  * @author Andrii Sysoiev
@@ -14,7 +15,7 @@ import java.util.Objects;
 @Component
 public class UserDaoMemory implements UserDao {
 
-    private final List<User> users = new ArrayList<>();
+    private final Map<Integer, User> users = new HashMap<>();
     private int currId;
 
     public UserDaoMemory() {
@@ -25,7 +26,7 @@ public class UserDaoMemory implements UserDao {
 
     @Override
     public List<User> getAll() {
-        return users;
+        return new ArrayList<>(users.values());
     }
 
     @Override
@@ -33,14 +34,17 @@ public class UserDaoMemory implements UserDao {
         if (user.getId() == null) {
             user.setId(++currId);
         }
-        users.add(user);
+        users.put(user.getId(), user);
         return user;
     }
 
     @Override
     public User findById(Integer id) {
-        return users.stream()
-                .filter(rec -> Objects.equals(id, rec.getId()))
-                .findFirst().orElse(null);
+        return users.get(id);
+    }
+
+    @Override
+    public User delete(Integer id) {
+        return users.remove(id);
     }
 }
