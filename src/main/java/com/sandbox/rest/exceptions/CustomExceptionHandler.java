@@ -2,8 +2,10 @@ package com.sandbox.rest.exceptions;
 
 import com.sandbox.rest.social.exceptions.DuplicateUserException;
 import com.sandbox.rest.social.exceptions.UserNotFoundException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,5 +41,13 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
                 .setMessage(ex.getMessage())
                 .setDetails(request.getDescription(false));
         return new ResponseEntity(exceptionResponse, HttpStatus.CONFLICT);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse()
+                .setMessage("Validation error!")
+                .setDetails(ex.getBindingResult().toString());
+        return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 }
