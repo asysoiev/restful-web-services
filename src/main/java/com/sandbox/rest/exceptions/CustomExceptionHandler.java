@@ -1,6 +1,7 @@
 package com.sandbox.rest.exceptions;
 
-import com.sandbox.rest.social.controllers.UserNotFoundException;
+import com.sandbox.rest.social.exceptions.DuplicateUserException;
+import com.sandbox.rest.social.exceptions.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -30,5 +31,13 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
                 .setMessage(ex.getMessage())
                 .setDetails(request.getDescription(false));
         return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(DuplicateUserException.class)
+    public final ResponseEntity<Object> handleDuplicateUserException(DuplicateUserException ex, WebRequest request) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse()
+                .setMessage(ex.getMessage())
+                .setDetails(request.getDescription(false));
+        return new ResponseEntity(exceptionResponse, HttpStatus.CONFLICT);
     }
 }

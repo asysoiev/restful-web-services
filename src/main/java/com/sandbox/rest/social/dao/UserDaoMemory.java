@@ -1,5 +1,6 @@
 package com.sandbox.rest.social.dao;
 
+import com.sandbox.rest.social.exceptions.DuplicateUserException;
 import com.sandbox.rest.social.models.User;
 import org.springframework.stereotype.Component;
 
@@ -19,9 +20,9 @@ public class UserDaoMemory implements UserDao {
     private int currId;
 
     public UserDaoMemory() {
-        save(new User().setName("Adam").setBirthDate(LocalDateTime.now()));
-        save(new User().setName("Eve").setBirthDate(LocalDateTime.now()));
-        save(new User().setName("Jack").setBirthDate(LocalDateTime.now()));
+        createUser(new User().setName("Adam").setBirthDate(LocalDateTime.now()));
+        createUser(new User().setName("Eve").setBirthDate(LocalDateTime.now()));
+        createUser(new User().setName("Jack").setBirthDate(LocalDateTime.now()));
     }
 
     @Override
@@ -30,11 +31,15 @@ public class UserDaoMemory implements UserDao {
     }
 
     @Override
-    public User save(User user) {
+    public User createUser(User user) {
         if (user.getId() == null) {
             user.setId(++currId);
         }
-        users.put(user.getId(), user);
+        Integer id = user.getId();
+        if (users.containsKey(id)) {
+            throw new DuplicateUserException(id);
+        }
+        users.put(id, user);
         return user;
     }
 

@@ -1,6 +1,7 @@
 package com.sandbox.rest.social.controllers;
 
 import com.sandbox.rest.social.dao.UserDao;
+import com.sandbox.rest.social.exceptions.UserNotFoundException;
 import com.sandbox.rest.social.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +41,7 @@ public class UserRestController {
 
     @PostMapping("/users")
     public ResponseEntity<Object> createUser(@RequestBody User user) {
-        User savedUser = userDao.save(user);
+        User savedUser = userDao.createUser(user);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/{id}")

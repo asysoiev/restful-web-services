@@ -11,7 +11,7 @@ public interface UserDao {
 
     List<User> getAll();
 
-    User save(User user);
+    User createUser(User user);
 
     User findById(Integer id);
 

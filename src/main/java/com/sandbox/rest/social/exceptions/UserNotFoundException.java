@@ -1,4 +1,4 @@
-package com.sandbox.rest.social.controllers;
+package com.sandbox.rest.social.exceptions;
 
 /**
  * @author Andrii Sysoiev
