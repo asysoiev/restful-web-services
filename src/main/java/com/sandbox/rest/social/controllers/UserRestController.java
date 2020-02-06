@@ -4,6 +4,8 @@ import com.sandbox.rest.social.dao.UserDao;
 import com.sandbox.rest.social.exceptions.UserNotFoundException;
 import com.sandbox.rest.social.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,12 +34,23 @@ public class UserRestController {
     }
 
     @GetMapping("/users/{id}")
-    public User findUserById(@PathVariable int id) {
+    public EntityModel<User> findUserById(@PathVariable int id) {
         User user = userDao.findById(id);
         if (user == null) {
             throw new UserNotFoundException(id);
         }
-        return user;
+
+        //HATEOAS
+        //creates a response entity
+        EntityModel<User> model = new EntityModel<>(user);
+        //creates a link to rest controller method
+        //independent from URI
+        List<User> allUsers = WebMvcLinkBuilder.methodOn(this.getClass()).getAllUsers();
+        WebMvcLinkBuilder linkTo = WebMvcLinkBuilder.linkTo(allUsers);
+        //add the link to the response
+        model.add(linkTo.withRel("all-users"));
+
+        return model;
     }
 
     @PostMapping("/users")
