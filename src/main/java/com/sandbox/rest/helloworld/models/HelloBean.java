@@ -5,13 +5,12 @@ import java.util.StringJoiner;
 /**
  * @author Andrii Sysoiev
  */
-public class HelloWorldBean {
+public class HelloBean {
 
-    private static final String MSG_TEMPLATE = "Hello World, %s";
     private String message;
 
-    public HelloWorldBean(String name) {
-        this.message = String.format(MSG_TEMPLATE, name);
+    public HelloBean(String message) {
+        this.message = message;
     }
 
     public String getMessage() {
@@ -24,7 +23,7 @@ public class HelloWorldBean {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", HelloWorldBean.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", HelloBean.class.getSimpleName() + "[", "]")
                 .add("message='" + message + "'")
                 .toString();
     }
