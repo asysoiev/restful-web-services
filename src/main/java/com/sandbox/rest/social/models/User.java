@@ -13,7 +13,6 @@ import java.util.StringJoiner;
  * @author Andrii Sysoiev
  */
 @ApiModel(description = "Sample model for experiments")
-//@JsonFilter("UserFilter")
 public class User {
 
     @JsonView(UserView.Short.class)
