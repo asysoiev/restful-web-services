@@ -1,8 +1,10 @@
 package com.sandbox.rest.social.controllers;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.sandbox.rest.social.dao.UserDao;
 import com.sandbox.rest.social.exceptions.UserNotFoundException;
 import com.sandbox.rest.social.models.User;
+import com.sandbox.rest.social.models.UserView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
@@ -29,11 +31,14 @@ public class UserRestController {
     private UserDao userDao;
 
     @GetMapping("/users")
+    @JsonView(UserView.Short.class)
     public List<User> getAllUsers() {
-        return userDao.getAll();
+        List<User> users = userDao.getAll();
+        return users;
     }
 
     @GetMapping("/users/{id}")
+    @JsonView(UserView.Full.class)
     public Resource<User> findUserById(@PathVariable int id) {
         User user = userDao.findById(id);
         if (user == null) {

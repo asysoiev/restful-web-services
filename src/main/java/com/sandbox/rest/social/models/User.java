@@ -1,5 +1,6 @@
 package com.sandbox.rest.social.models;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -12,14 +13,18 @@ import java.util.StringJoiner;
  * @author Andrii Sysoiev
  */
 @ApiModel(description = "Sample model for experiments")
+//@JsonFilter("UserFilter")
 public class User {
 
+    @JsonView(UserView.Short.class)
     private Integer id;
     @Size(min = 2, message = "Name must have at least 2 characters")
     @ApiModelProperty(value = "Name must have at least 2 characters")
+    @JsonView(UserView.Short.class)
     private String name;
     @Past
     @ApiModelProperty(value = "Must be in the past")
+    @JsonView(UserView.Full.class)
     private LocalDateTime birthDate;
 
     public Integer getId() {
