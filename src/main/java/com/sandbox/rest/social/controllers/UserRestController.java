@@ -78,5 +78,4 @@ public class UserRestController {
             throw new UserNotFoundException(id);
         }
     }
-
 }

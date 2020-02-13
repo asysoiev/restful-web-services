@@ -2,6 +2,7 @@ package com.sandbox.rest.social.dao;
 
 import com.sandbox.rest.social.exceptions.DuplicateUserException;
 import com.sandbox.rest.social.models.User;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.util.Map;
 /**
  * @author Andrii Sysoiev
  */
+@Profile("memory")
 @Component
 public class UserDaoMemory implements UserDao {
 
@@ -20,9 +22,9 @@ public class UserDaoMemory implements UserDao {
     private int currId;
 
     public UserDaoMemory() {
-        createUser(new User().setName("Adam").setBirthDate(LocalDateTime.now()));
-        createUser(new User().setName("Eve").setBirthDate(LocalDateTime.now()));
-        createUser(new User().setName("Jack").setBirthDate(LocalDateTime.now()));
+        createUser(new User("Adam", LocalDateTime.now()));
+        createUser(new User("Eve", LocalDateTime.now()));
+        createUser(new User("Jack", LocalDateTime.now()));
     }
 
     @Override
