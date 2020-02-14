@@ -3,17 +3,18 @@ package com.sandbox.rest.social.dao;
 import com.sandbox.rest.social.models.User;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Andrii Sysoiev
  */
 public interface UserDao {
 
-    List<User> getAll();
+    List<User> findAll();
 
-    User createUser(User user);
+    User save(User user);
 
-    User findById(Integer id);
+    Optional<User> findById(Integer id);
 
-    User delete(Integer id);
+    void deleteById(Integer id);
 }

@@ -33,17 +33,14 @@ public class UserRestController {
     @GetMapping("/users")
     @JsonView(UserView.Short.class)
     public List<User> getAllUsers() {
-        List<User> users = userDao.getAll();
+        List<User> users = userDao.findAll();
         return users;
     }
 
     @GetMapping("/users/{id}")
     @JsonView(UserView.Full.class)
     public Resource<User> findUserById(@PathVariable int id) {
-        User user = userDao.findById(id);
-        if (user == null) {
-            throw new UserNotFoundException(id);
-        }
+        User user = userDao.findById(id).orElseThrow(() -> new UserNotFoundException(id));
 
         //HATEOAS sb 2.2.4
 //        EntityModel<User> model = new EntityModel<>(user);
@@ -61,7 +58,7 @@ public class UserRestController {
 
     @PostMapping("/users")
     public ResponseEntity<Object> createUser(@Valid @RequestBody User user) {
-        User savedUser = userDao.createUser(user);
+        User savedUser = userDao.save(user);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/{id}")
@@ -73,9 +70,6 @@ public class UserRestController {
 
     @DeleteMapping("/users/{id}")
     public void deleteUserById(@PathVariable int id) {
-        User user = userDao.delete(id);
-        if (user == null) {
-            throw new UserNotFoundException(id);
-        }
+        userDao.deleteById(id);
     }
 }

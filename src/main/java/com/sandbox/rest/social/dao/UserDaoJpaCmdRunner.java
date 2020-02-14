@@ -25,11 +25,11 @@ public class UserDaoJpaCmdRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        User adam = userDao.createUser(new User("Adam", LocalDateTime.now().minusYears(10)));
+        User adam = userDao.save(new User("Adam", LocalDateTime.now().minusYears(10)));
         logger.debug("Created new user: {}", adam);
-        User eve = userDao.createUser(new User("Eve", LocalDateTime.now().minusYears(30)));
+        User eve = userDao.save(new User("Eve", LocalDateTime.now().minusYears(30)));
         logger.debug("Created new user: {}", eve);
-        User jack = userDao.createUser(new User("Jack", LocalDateTime.now().minusYears(20)));
+        User jack = userDao.save(new User("Jack", LocalDateTime.now().minusYears(20)));
         logger.debug("Created new user: {}", jack);
     }
 }

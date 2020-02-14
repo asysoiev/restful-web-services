@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author Andrii Sysoiev
@@ -22,18 +23,18 @@ public class UserDaoMemory implements UserDao {
     private int currId;
 
     public UserDaoMemory() {
-        createUser(new User("Adam", LocalDateTime.now()));
-        createUser(new User("Eve", LocalDateTime.now()));
-        createUser(new User("Jack", LocalDateTime.now()));
+        save(new User("Adam", LocalDateTime.now()));
+        save(new User("Eve", LocalDateTime.now()));
+        save(new User("Jack", LocalDateTime.now()));
     }
 
     @Override
-    public List<User> getAll() {
+    public List<User> findAll() {
         return new ArrayList<>(users.values());
     }
 
     @Override
-    public User createUser(User user) {
+    public User save(User user) {
         if (user.getId() == null) {
             user.setId(++currId);
         }
@@ -46,12 +47,12 @@ public class UserDaoMemory implements UserDao {
     }
 
     @Override
-    public User findById(Integer id) {
-        return users.get(id);
+    public Optional<User> findById(Integer id) {
+        return Optional.ofNullable(users.get(id));
     }
 
     @Override
-    public User delete(Integer id) {
-        return users.remove(id);
+    public void deleteById(Integer id) {
+        users.remove(id);
     }
 }
