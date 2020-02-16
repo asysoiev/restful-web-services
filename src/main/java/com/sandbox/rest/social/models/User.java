@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.StringJoiner;
 
 /**
@@ -30,14 +30,14 @@ public class User {
     @JsonView(UserView.Full.class)
     @Past
     @ApiModelProperty(value = "Must be in the past")
-    private LocalDateTime birthDate;
+    private LocalDate birthDate;
 
     protected User() {
         //JPA requires default constructor
     }
 
     public User(@Size(min = 2, message = "Name must have at least 2 characters") String name,
-                @Past LocalDateTime birthDate) {
+                @Past LocalDate birthDate) {
         this.name = name;
         this.birthDate = birthDate;
     }
@@ -60,11 +60,11 @@ public class User {
         return this;
     }
 
-    public LocalDateTime getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public User setBirthDate(LocalDateTime birthDate) {
+    public User setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
         return this;
     }

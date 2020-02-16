@@ -5,7 +5,7 @@ import com.sandbox.rest.social.models.User;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,9 +23,9 @@ public class UserDaoMemory implements UserDao {
     private int currId;
 
     public UserDaoMemory() {
-        save(new User("Adam", LocalDateTime.now()));
-        save(new User("Eve", LocalDateTime.now()));
-        save(new User("Jack", LocalDateTime.now()));
+        save(new User("Adam", LocalDate.now()));
+        save(new User("Eve", LocalDate.now()));
+        save(new User("Jack", LocalDate.now()));
     }
 
     @Override
