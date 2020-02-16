@@ -1,5 +1,6 @@
-package com.sandbox.rest.social.dao;
+package com.sandbox.rest.social.dao.inmemory;
 
+import com.sandbox.rest.social.dao.UserDao;
 import com.sandbox.rest.social.exceptions.DuplicateUserException;
 import com.sandbox.rest.social.models.User;
 import org.springframework.context.annotation.Profile;

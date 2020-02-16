@@ -1,5 +1,6 @@
-package com.sandbox.rest.social.dao;
+package com.sandbox.rest.social.dao.jpa;
 
+import com.sandbox.rest.social.dao.UserDao;
 import com.sandbox.rest.social.models.User;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

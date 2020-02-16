@@ -1,6 +1,7 @@
 package com.sandbox.rest.social.controllers;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.sandbox.rest.social.dao.PostDao;
 import com.sandbox.rest.social.dao.UserDao;
 import com.sandbox.rest.social.exceptions.UserNotFoundException;
 import com.sandbox.rest.social.models.Post;
@@ -30,6 +31,8 @@ public class SocialMediaRestController {
 
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private PostDao postDao;
 
     @GetMapping("/users")
     @JsonView(UserView.Short.class)
@@ -62,7 +65,7 @@ public class SocialMediaRestController {
         User savedUser = userDao.save(user);
 
         URI location = ServletUriComponentsBuilder
-                .fromCurrentContextPath().path("/{id}")
+                .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(savedUser.getId())
                 .toUri();
 
@@ -78,5 +81,20 @@ public class SocialMediaRestController {
     public List<Post> getUserPosts(@PathVariable int id) {
         User user = userDao.findById(id).orElseThrow(() -> new UserNotFoundException(id));
         return user.getPosts();
+    }
+
+    @PostMapping("/users/{id}/posts")
+    public ResponseEntity<Object> createPost(@PathVariable int id, @Valid @RequestBody Post post) {
+        User user = userDao.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+
+        post.setUser(user);
+        postDao.save(post);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{id}")
+                .buildAndExpand(post.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).build();
     }
 }
