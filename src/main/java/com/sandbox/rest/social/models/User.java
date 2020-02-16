@@ -7,9 +7,12 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.StringJoiner;
 
 /**
@@ -21,7 +24,8 @@ public class User {
 
     @JsonView(UserView.Short.class)
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "user_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "user_id_seq")
     private Integer id;
     @JsonView(UserView.Short.class)
     @Size(min = 2, message = "Name must have at least 2 characters")
@@ -31,6 +35,10 @@ public class User {
     @Past
     @ApiModelProperty(value = "Must be in the past")
     private LocalDate birthDate;
+
+    @JsonView(UserView.Full.class)
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
 
     protected User() {
         //JPA requires default constructor
@@ -66,6 +74,15 @@ public class User {
 
     public User setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+        return this;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public User setPosts(List<Post> posts) {
+        this.posts = posts;
         return this;
     }
 
