@@ -1,5 +1,7 @@
 package com.sandbox.rest.social.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -21,6 +23,7 @@ public class Post {
     private Integer id;
     private String description;
 
+    @JsonIgnore
     @ManyToOne(fetch = LAZY)
     private User user;
 

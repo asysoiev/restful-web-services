@@ -3,6 +3,7 @@ package com.sandbox.rest.social.controllers;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.sandbox.rest.social.dao.UserDao;
 import com.sandbox.rest.social.exceptions.UserNotFoundException;
+import com.sandbox.rest.social.models.Post;
 import com.sandbox.rest.social.models.User;
 import com.sandbox.rest.social.models.UserView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ import java.util.List;
  * @author Andrii Sysoiev
  */
 @RestController
-public class UserRestController {
+public class SocialMediaRestController {
 
     @Autowired
     private UserDao userDao;
@@ -71,5 +72,11 @@ public class UserRestController {
     @DeleteMapping("/users/{id}")
     public void deleteUserById(@PathVariable int id) {
         userDao.deleteById(id);
+    }
+
+    @GetMapping("/users/{id}/posts")
+    public List<Post> getUserPosts(@PathVariable int id) {
+        User user = userDao.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        return user.getPosts();
     }
 }
